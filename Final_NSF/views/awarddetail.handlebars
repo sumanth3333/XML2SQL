@@ -1,0 +1,97 @@
+{{#if awarddetail}}
+  <div class="award-details" style="text-align: center;">
+    <h1>Award Id: {{awarddetail.AwardID}}</h1>
+    <br>
+    <br>
+    <table class="award-table" border="2px solid pink" style="margin: 2 auto;">
+      <tr>
+        <td>Award ID</td>
+        <td>{{awarddetail.AwardID}}</td>
+      </tr>
+      <tr>
+        <td>Max Amd Letter Date</td>
+        <td>{{awarddetail.MinAmdLetterDate }}</td>
+      </tr>
+      <tr>
+        <td>Min Amd Letter Date</td>
+        <td>{{awarddetail.MaxAmdLetterDate }}</td>
+      </tr>
+      <tr>
+        <td>Award Effective Date</td>
+        <td>{{awarddetail.AwardEffectiveDate }}</td>
+      </tr>
+      <tr>
+        <td>Award Expiration Date</td>
+        <td>{{awarddetail.AwardExpirationDate }}</td>
+      </tr>
+      <tr>
+        <td>Award Total Intl Amount</td>
+        <td>${{awarddetail.AwardTotalIntnAmount }}</td>
+      </tr>
+      <tr>
+        <td>Award Amount</td>
+        <td>${{awarddetail.AwardAmount }}</td>
+      </tr>
+      <tr>
+        <td>Award Narration</td>
+        <td>{{awarddetail.AbstractNarration}}</td>
+      </tr>
+      <tr>
+        <td>Award First Investigator</td>
+        <td>{{awarddetail.First_Investigator  }}</td>
+      </tr>
+      <tr>
+        <td>Award Second Investigator</td>
+        <td>{{awarddetail.Second_Investigator  }}</td>
+      </tr>
+      <tr>
+        <td>Program Officer NAme</td>
+        <td>{{awarddetail.SignBlockName }}</td>
+      </tr>
+      <tr>
+        <td>Institute</td>
+        <td>{{awarddetail.Name }}</td>
+      </tr>
+    
+      
+    </table>
+  </div>
+{{else}}
+  <p>Sorry, no matching award was found.</p>
+{{/if}}
+
+<style>
+  .award-details {
+    font-family: Arial, sans-serif;
+    font-size: small;
+    
+  }
+
+  .award-table {
+    border-collapse: collapse;
+    width: 85%;
+    margin-top: 20px;
+  }
+
+  .award-table td {
+    padding: 5px;
+    text-align: left;
+  }
+
+  .award-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .award-table tr:first-child {
+    font-weight: bold;
+    background-color: #ddd;
+  }
+
+  .award-table td:first-child {
+    font-weight: bold;
+  }
+
+  p {
+    color: rgb(55, 0, 255);
+  }
+</style>
