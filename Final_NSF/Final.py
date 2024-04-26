@@ -4,6 +4,10 @@ import pandas as pd
 import mysql.connector
 from mysql.connector import Error
 import xml.etree.ElementTree as Xet
+import os 
+import sys 
+
+
 
 #set up database connection mysql/project/NSF
 try:
@@ -247,7 +251,9 @@ try:
             # print("Info Tables created ")                 
 #------------------------------------- 
 #setting path
-        path = '/Users/sumanth-work/Documents/YSU/Final Project/Final_NSF/xml/'
+        xml_directory = os.path.dirname(os.path.abspath(sys.argv[0])) 
+        print(xml_directory)
+        path = xml_directory+'/xml/'
         xml_files = [f for f in os.listdir(path) if f.endswith('.xml')]
 
         if xml_files:
@@ -682,14 +688,14 @@ try:
                     if result:
                         print(f"AwardID {award_id} already exists in info table. Skipping update on table...")
                     else:
-                        cursor.execute("INSERT INTO info (AwardID, MinAmdLetterDate, MaxAmdLetterDate, AwardEffectiveDate, AwardExpirationDate, AwardTotalIntnAmount, AwardAmount, AbstractNarration, First_Investigator, Second_Investigator, SignBlockName) \
-        SELECT award.AwardID, award.MinAmdLetterDate, award.MinAmdLetterDate, award.AwardEffectiveDate, award.AwardExpirationDate, award.AwardTotalIntnAmount, award.AwardAmount, award.AbstractNarration, \
-        concat(investigator.FirstName,' ', investigator.LastName) as First_Investigator, concat(investigator.FirstName2,' ', investigator.LastName2) as Second_Investigator , program_officer.SignBlockName \
-        FROM award \
-        JOIN investigator ON award.AwardID =investigator.AwardID \
-        JOIN program_officer ON investigator.AwardID=program_officer.AwardID \
-        WHERE award.AwardID = %s", (award_id,))
-
+                        cursor.execute("INSERT INTO info (AwardID, MinAmdLetterDate, MaxAmdLetterDate, AwardEffectiveDate, AwardExpirationDate, AwardTotalIntnAmount, AwardAmount, AbstractNarration, First_Investigator, Second_Investigator, SignBlockName, name) \
+                        SELECT award.AwardID, award.MinAmdLetterDate, award.MinAmdLetterDate, award.AwardEffectiveDate, award.AwardExpirationDate, award.AwardTotalIntnAmount, award.AwardAmount, award.AbstractNarration, \
+                        investigator.PI_FULL_NAME as First_Investigator, investigator.PI_FULL_NAME2 as Second_Investigator , program_officer.SignBlockName, institution.name\
+                        FROM award \
+                        JOIN investigator ON award.AwardID =investigator.AwardID \
+                        JOIN program_officer ON investigator.AwardID=program_officer.AwardID \
+                        JOIN institution ON program_officer.AwardID = institution.awardID\
+                        WHERE award.AwardID = %s", (award_id,))
                     try:
         
                         print(f"AwardID {award_id} successfully inserted into info table.")

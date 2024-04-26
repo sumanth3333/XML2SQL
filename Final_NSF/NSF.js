@@ -39,8 +39,8 @@ app.get("/", function(request, response)
         supportdb.getAwards(function(result)
         {
             request.session.awardlist =result;
-            //console.log(request.session.awardlist); -- its printing 
-            //console.log(result);
+         //  console.log(request.session.awardlist);
+         //   console.log(result);
             response.render("home");
 
         });
@@ -67,9 +67,18 @@ app.get("/home", function(request,response)
 app.get("/awardselect", function(request,response)
 
 { 
-   
     response.render("awardselect",{awardselect:request.session.awardlist});
-    
+});
+
+app.get("/awardselectbyIns", function(request,response)
+
+{ 
+    response.render("awardselectbyIns",{awardselectbyins:request.session.awardlist});
+});
+
+app.get("/awardselectbypi", function(request,response)
+{ 
+    response.render("awardselectbypi",{awardselectbypi:request.session.awardlist});
 });
 
 
@@ -77,12 +86,34 @@ app.get("/awardselect", function(request,response)
 app.get("/awarddetail", function(request,response)
 {   
 var awardlist = request.session.awardlist;
-//console.log('SFDFDFRFGFHGYHYYJJH*********')
  var tosearch = support.getAwardByid(request.query.id, awardlist);
  {
     response.render("awarddetail",{awarddetail:tosearch});
     
  }
 });
-// Have the app listen at port 8080
+
+app.get("/awarddetailpi", function(request,response)
+{   
+var awardlist = request.session.awardlist;
+
+ var tosearch = support.getAwardByPI(request.query.id, awardlist);
+ {
+    response.render("awarddetailpi",{awarddetailpi:tosearch});
+    
+ }
+});
+
+app.get("/awarddetailins", function(request,response)
+{   
+var awardlist = request.session.awardlist;
+
+ var tosearch = support.getAwardByIns(request.query.id, awardlist);
+ {
+    response.render("awarddetailins",{awarddetailins:tosearch});
+    
+ }
+});
+// Have the app listen at port 3002
 http.createServer(app).listen(3002);
+
